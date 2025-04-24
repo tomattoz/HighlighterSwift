@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "Highlighter",
     platforms: [
-        .macOS(.v10_14),
-        .iOS(.v12),
+        .macOS(.v10_15),
+        .iOS(.v13),
     ],
     products: [
         .library(
