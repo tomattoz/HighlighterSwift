@@ -16,11 +16,19 @@ public struct HighlighterView: NSViewRepresentable {
     @Binding var text: String
     let theme: String?
     let language: String?
+    let inset: CGSize?
+    let background: NSColor?
 
-    public init(text: Binding<String>, theme: String? = nil, language: String? = nil) {
+    public init(text: Binding<String>,
+                theme: String? = nil,
+                language: String? = nil,
+                inset: CGSize? = nil,
+                background: NSColor? = nil) {
         _text = .init(projectedValue: text)
         self.theme = theme
         self.language = language
+        self.inset = inset
+        self.background = background
     }
     
     private func applyProperties(to textView: HighlighterTextView) {
@@ -34,6 +42,14 @@ public struct HighlighterView: NSViewRepresentable {
         
         if let language {
             textView.highlighterTextStorage.language = language
+        }
+        
+        if let inset {
+            textView.textContainerInset = inset
+        }
+        
+        if let background {
+            textView.backgroundColor = background
         }
     }
 
