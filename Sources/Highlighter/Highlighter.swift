@@ -29,7 +29,9 @@ open class Highlighter {
             themeChanged?(theme)
         }
     }
-
+   
+    open var themeName: String = ""
+    
     // This block will be called every time the theme changes.
     open var themeChanged: ((Theme) -> Void)?
 
@@ -172,6 +174,10 @@ open class Highlighter {
     @discardableResult
     open func setTheme(_ themeName: String, withFont: String? = nil, ofSize: CGFloat? = nil) -> Bool {
         
+        guard self.themeName != themeName else {
+            return true
+        }
+        
         // Make sure we can load the theme's CSS file -- or fail
         guard let themePath = self.bundle.path(forResource: themeName, ofType: "css") else {
             return false
@@ -192,6 +198,7 @@ open class Highlighter {
         // Get the theme CSS and instantiate a Theme object
         let themeString = try! String.init(contentsOfFile: themePath)
         self.theme = Theme.init(withTheme: themeString, usingFont: font)
+        self.themeName = themeName
         return true
     }
 
